@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, doc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, updateDoc } from '@angular/fire/firestore';
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,12 @@ export class FirebaseService {
         console.log('Adding user finished: ', result)
       }
       )
+  }
+
+  async updateUser(user: any, id: string) {
+    let docRef = this.getSingleDocRef(id);
+    await updateDoc(docRef, user).catch(
+      (err) => { console.error(err); }
+    );
   }
 }
